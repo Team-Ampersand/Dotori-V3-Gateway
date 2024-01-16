@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus
 
 class GatewayException : RuntimeException {
 
-    private val httpStatus: HttpStatus
+    val httpStatus: HttpStatus
 
     constructor(message: String, httpStatus: HttpStatus) : super(message) {
         this.httpStatus = httpStatus
