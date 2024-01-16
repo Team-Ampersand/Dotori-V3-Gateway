@@ -32,6 +32,7 @@ dependencies {
     implementation("com.nimbusds:nimbus-jose-jwt:9.21")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap")
 }
 
 dependencyManagement {
