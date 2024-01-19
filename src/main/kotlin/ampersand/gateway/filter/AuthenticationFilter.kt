@@ -26,10 +26,10 @@ class AuthenticationFilter(
             val jwtTokenClaims = jwt.parseToken(pureToken)
 
             val subject = jwtTokenClaims["sub"]!!.toString()
-            val authorities = jwtTokenClaims["authorities"]!!.toString()
+            val roles = jwtTokenClaims["roles"]!!.toString()
 
             requestBuilder.header("Request-User-Id", subject)
-            requestBuilder.header("Request-User-Authorities", authorities)
+            requestBuilder.header("Request-User-Authorities", roles)
         }
 
         val modifiedRequest = requestBuilder.build()
