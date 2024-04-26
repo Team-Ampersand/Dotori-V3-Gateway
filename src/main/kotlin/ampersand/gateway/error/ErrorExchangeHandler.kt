@@ -1,5 +1,6 @@
 package ampersand.gateway.error
 
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.web.WebProperties
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
 import org.springframework.boot.web.reactive.error.ErrorAttributes
@@ -24,6 +25,8 @@ class ErrorExchangeHandler(
     webProperties.resources,
     applicationContext
 ) {
+
+    private val log = LoggerFactory.getLogger(this::class.simpleName)
     init {
         super.setMessageReaders(serverCodecConfigurer.readers)
         super.setMessageWriters(serverCodecConfigurer.writers)
@@ -40,10 +43,12 @@ class ErrorExchangeHandler(
             else -> buildErrorResponse(GatewayException("Internal Server Error", HttpStatus.INTERNAL_SERVER_ERROR))
         }
 
-    private fun buildErrorResponse(ex: GatewayException) =
-        ServerResponse.status(ex.httpStatus)
+    private fun buildErrorResponse(ex: GatewayException): Mono<ServerResponse> {
+        log.error(ex.message)
+        return ServerResponse.status(ex.httpStatus)
             .bodyValue(
-                ErrorResponse.of(ex.cause!!)
+                ErrorResponse.of(ex.cause ?: Throwable("Not Exists Cause by Exception"))
             )
+    }
 
 }
