@@ -25,12 +25,10 @@ class AuthenticationFilter(
             val pureToken = it.removeJwtTokenPrefix()
             val jwtTokenClaims = jwt.parseToken(pureToken)
 
-            val subject = jwtTokenClaims["sub"]!!.toString()
-            val authorities = jwtTokenClaims["authorities"]!!.toString()
-            val authority = jwtTokenClaims["authority"]!!.toString()
+            val subject = jwtTokenClaims["sub"].toString()
+            val authority = jwtTokenClaims["authority"].toString()
 
             requestBuilder.header("Request-Member-Id", subject)
-            requestBuilder.header("Request-Member-Authorities", authorities)
             requestBuilder.header("Request-Member-Authority", authority)
         }
 
@@ -43,6 +41,5 @@ class AuthenticationFilter(
         return chain.filter(modifiedExchange)
 
     }
-
 
 }
