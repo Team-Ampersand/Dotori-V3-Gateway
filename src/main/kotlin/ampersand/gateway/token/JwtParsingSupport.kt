@@ -4,7 +4,7 @@ import org.springframework.http.HttpHeaders
 
 object JwtParsingSupport {
     private const val JWT_HEADER_NAME = "Authorization"
-    private const val JWT_TOKEN_PREFIX = "Bearer"
+    private const val JWT_TOKEN_PREFIX = "Bearer "
 
     fun HttpHeaders.getAuthorizationFromHeader() =
         this[JWT_HEADER_NAME]?.let {
